@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:openstoreapp_client/tiles/drawer_tile.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -28,13 +29,47 @@ class CustomDrawer extends StatelessWidget {
                     top: 8.0,
                     left: 0.0,
                     child: Text(
-                      "OpenStore \n Clothing",
+                      "OpenStore \nClothing",
                       style: TextStyle(fontSize: 34.0, fontWeight: FontWeight.bold),
                     ),
+                  ),
+                  Positioned(
+                    left: 0.0,
+                    bottom: 0.0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                      Text("Olá,",
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold
+                        ),
+
+                      ),
+                      GestureDetector(
+                        child: Text(
+                        "Entre ou cadastre-se >",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      onTap: (){
+
+                      },
+                      )
+                      
+                    ],)
                   )
                 ],
               ),
-            )
+            ),
+            Divider(),
+            DrawerTile(Icons.home, "Início"),
+            DrawerTile(Icons.list, "Produtos"),
+            DrawerTile(Icons.location_on, "Lojas"),
+            DrawerTile(Icons.playlist_add_check, "Meus Pedidos"),
           ],
         )
       ],
