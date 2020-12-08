@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class HomeTab extends StatelessWidget {
   @override
@@ -43,13 +45,23 @@ class HomeTab extends StatelessWidget {
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
                 ));
               else {
-                print(snapshot.data.docs.length);
-                return SliverToBoxAdapter(
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 200,
-                    child: Container(),
-                    )
+                return SliverStaggeredGrid.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 1.0,
+                  crossAxisSpacing: 1.0,
+                  staggeredTiles: snapshot.data.docs.map(
+                    (doc){
+                      return StaggeredTile.count(doc.data()["x"], doc.data()["y"]);
+                    }
+                  ).toList(),             
+                  children: snapshot.data.docs.map(
+                    (doc){
+                      return FadeInImage.memoryNetwork(
+                        placeholder: kTransparentImage,
+                        image: doc.data()["image"],
+                        fit: BoxFit.cover,
+                      );
+                  }).toList(),
                 );
               }
             },
