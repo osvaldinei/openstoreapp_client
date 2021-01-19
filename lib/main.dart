@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:openstoreapp_client/screens/home_screen.dart';
 import 'package:openstoreapp_client/screens/login_screen.dart';
+import 'package:openstoreapp_client/screens/signup_screen.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,8 +23,8 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
 
-      // home: HomeScreen()
-      home: LoginScreen()
+       home: HomeScreen()
+      
     );
   }
 }
