@@ -14,10 +14,12 @@ class _SignupScreenState extends State<SignupScreen> {
   final _passController = TextEditingController();
   final _addressController = TextEditingController();
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
         appBar: AppBar(
           title: Text("Criar"),
           centerTitle: true,
@@ -108,7 +110,26 @@ class _SignupScreenState extends State<SignupScreen> {
         ));
   }
 
-  void _onSuccess() {}
+  void _onSuccess() {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(content: Text("Usuário criado com sucesso!"),
+        backgroundColor: Theme.of(context).primaryColor,
+        duration: Duration(seconds: 2),
+      )
+    );
+    Future.delayed(Duration(seconds: 2)).then((_) => Navigator.of(context).pop());
+  }
 
-  void _onFail() {}
+  void _onFail() {
+
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(content: Text("Falha ao criar usuário!"),
+        backgroundColor: Colors.redAccent,
+        duration: Duration(seconds: 2),
+      )
+    );
+    
+
+
+  }
 }
