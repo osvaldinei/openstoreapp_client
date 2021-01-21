@@ -6,23 +6,21 @@ import 'package:scoped_model/scoped_model.dart';
 class UserModel extends Model {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  
   UserCredential firebaseUser;
 
   User user;
- 
 
   Map<String, dynamic> userData = Map();
 
   bool isLoading = false;
 
   @override
-  void addListener(VoidCallback listener){
+  void addListener(VoidCallback listener) {
     super.addListener(listener);
 
     _loadCurrentUser();
   }
-  
+
   void signUp(
       {@required Map<String, dynamic> userData,
       @required String pass,
@@ -69,22 +67,20 @@ class UserModel extends Model {
     isLoading = true;
     notifyListeners();
 
-    _auth.signInWithEmailAndPassword(email: email, password: pass).then((user)async{
-        
-        firebaseUser = user;
+    _auth
+        .signInWithEmailAndPassword(email: email, password: pass)
+        .then((user) async {
+      firebaseUser = user;
 
-        await _loadCurrentUser();
+      await _loadCurrentUser();
 
-        onSuccess();
-        isLoading = false;
-        notifyListeners();
-
-    }).catchError((e){
-
+      onSuccess();
+      isLoading = false;
+      notifyListeners();
+    }).catchError((e) {
       onFail();
       isLoading = false;
       notifyListeners();
-
     });
 
     isLoading = false;
@@ -100,7 +96,9 @@ class UserModel extends Model {
     notifyListeners();
   }
 
-  void recoverPass() {}
+  void recoverPass(String email) {
+    _auth.sendPasswordResetEmail(email: email);
+  }
 
   bool isLoggedIn() {
     return firebaseUser != null;
@@ -114,28 +112,18 @@ class UserModel extends Model {
         .set(userData);
   }
 
-
-
-  Future<Null> _loadCurrentUser() async{
-
-   
-
-    if(firebaseUser == null){
-        user =  await _auth.currentUser;
-        
+  Future<Null> _loadCurrentUser() async {
+    if (firebaseUser == null) {
+      user = await _auth.currentUser;
     }
-    if(user != null)  {
-      if(userData["name"] == null){
-        DocumentSnapshot docUser = 
+    if (user != null) {
+      if (userData["name"] == null) {
+        DocumentSnapshot docUser =
             await Firestore.instance.collection("users").doc(user.uid).get();
         userData = docUser.data();
       }
     }
 
     notifyListeners();
-
-
   }
-
-
 }
