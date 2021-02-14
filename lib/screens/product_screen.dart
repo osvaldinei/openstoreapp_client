@@ -5,6 +5,7 @@ import 'package:openstoreapp_client/datas/product_data.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:openstoreapp_client/models/cart_model.dart';
 import 'package:openstoreapp_client/models/user_model.dart';
+import 'package:openstoreapp_client/screens/cart_screen.dart';
 import 'package:openstoreapp_client/screens/login_screen.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -121,7 +122,9 @@ class _ProductScreenState extends State<ProductScreen> {
                           cartProduct.category = product.category;
 
                           CartModel.of(context).addCartItem(cartProduct);
-                        }{
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => CartScreen()));
+                        }else{
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) => LoginScreen())
                           );
