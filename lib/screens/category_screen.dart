@@ -1,7 +1,9 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
+
 import 'package:openstoreapp_client/datas/product_data.dart';
 import 'package:openstoreapp_client/tiles/product_tile.dart';
 
@@ -45,29 +47,29 @@ class CategoryScreen extends StatelessWidget {
                     physics: NeverScrollableScrollPhysics(),
                     children: [
                       GridView.builder(
-                        padding: EdgeInsets.all(4.0),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 4.0,
-                          crossAxisSpacing: 4.0,
-                          childAspectRatio: 0.65,
-                        ),
-                        itemCount: snapshot.data.docs.length,
-                        itemBuilder: (context, index) {
-                          return ProductTile(
-                              "grid",
-                              ProductData.fromDocument(
-                                  snapshot.data.docs[index]));
-                        },
-                      ),
+                          padding: EdgeInsets.all(4.0),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 4.0,
+                            crossAxisSpacing: 4.0,
+                            childAspectRatio: 0.65,
+                          ),
+                          itemCount: snapshot.data.docs.length,
+                          itemBuilder: (context, index) {
+                            ProductData data = ProductData.fromDocument(
+                                snapshot.data.docs[index]);
+                            data.category = this.snapshot.id;
+                            return ProductTile("grid", data);
+                          }),
                       ListView.builder(
                         padding: EdgeInsets.all(4.0),
                         itemCount: snapshot.data.docs.length,
                         itemBuilder: (context, index) {
-                          return ProductTile(
-                              "list",
-                              ProductData.fromDocument(
-                                  snapshot.data.docs[index]));
+                          ProductData data = ProductData.fromDocument(
+                                snapshot.data.docs[index]);
+                            data.category = this.snapshot.id;
+                            return ProductTile("list", data);
                         },
                       )
                     ],
