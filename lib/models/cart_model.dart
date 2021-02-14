@@ -9,6 +9,8 @@ class CartModel extends Model{
   UserModel user;
   List<CartProduct> products = [];
 
+  bool isLoading = false;
+  
   CartModel(this.user);
 
   static CartModel of(BuildContext context) =>
