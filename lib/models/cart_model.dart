@@ -10,6 +10,10 @@ class CartModel extends Model{
   List<CartProduct> products = [];
 
   bool isLoading = false;
+  
+  String couponCode;
+  int discountPercentage = 0;
+
 
   CartModel(this.user){
     if(user.isLoggedIn()){
@@ -54,6 +58,11 @@ class CartModel extends Model{
     Firestore.instance.collection("users").document(user.firebaseUser.user.uid).collection("cart").doc(cartProduct.cid).updateData(cartProduct.toMap());
 
     notifyListeners();
+  }
+
+  void setCoupon(String couponCode, int discpountPercentage){
+    this.couponCode = couponCode;
+    this.discountPercentage = discountPercentage;
   }
 
   void _loadCardItems() async{
