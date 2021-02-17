@@ -62,7 +62,28 @@ class CartModel extends Model{
 
   void setCoupon(String couponCode, int discpountPercentage){
     this.couponCode = couponCode;
-    this.discountPercentage = discountPercentage;
+    this.discountPercentage = discpountPercentage;
+  }
+
+  void updatePrices(){
+    notifyListeners();
+  }
+
+  double getProductPrice(){
+    double price = 0.0;
+    for(CartProduct c in products){
+      if(c.productData != null)
+        price += c.quantity * c.productData.price;
+    }
+    return price;
+  }
+
+  double getDiscount(){
+    return getProductPrice() * discountPercentage / 100;
+  }
+
+  double getShipPrice(){
+    return 9.99;
   }
 
   void _loadCardItems() async{
