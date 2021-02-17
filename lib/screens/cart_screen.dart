@@ -3,7 +3,7 @@ import 'package:openstoreapp_client/models/cart_model.dart';
 import 'package:openstoreapp_client/models/user_model.dart';
 import 'package:openstoreapp_client/screens/login_screen.dart';
 import 'package:openstoreapp_client/tiles/cart_tile.dart';
-import 'package:openstoreapp_client/widgets/cat_price.dart';
+import 'package:openstoreapp_client/widgets/cart_price.dart';
 import 'package:openstoreapp_client/widgets/discount_card.dart';
 import 'package:openstoreapp_client/widgets/ship_card.dart';
 import 'package:scoped_model/scoped_model.dart';
