@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:openstoreapp_client/models/cart_model.dart';
 import 'package:openstoreapp_client/models/user_model.dart';
 import 'package:openstoreapp_client/screens/login_screen.dart';
+import 'package:openstoreapp_client/screens/order_screen.dart';
 import 'package:openstoreapp_client/tiles/cart_tile.dart';
 import 'package:openstoreapp_client/widgets/cart_price.dart';
 import 'package:openstoreapp_client/widgets/discount_card.dart';
@@ -83,19 +84,22 @@ class CartScreen extends StatelessWidget {
               ),
             );
           } else {
-            return ListView(
-              children: <Widget>[
-                Column(children: model.products.map(
-                  (product){
-                    return CartTile(product);
-                  }
-                ).toList(),
-                ),
-                DiscountCard(),
-                ShipCard(),
-                CartPrice((){}),
-              ]
-            );
+            return ListView(children: <Widget>[
+              Column(
+                children: model.products.map((product) {
+                  return CartTile(product);
+                }).toList(),
+              ),
+              DiscountCard(),
+              ShipCard(),
+              CartPrice(() async {
+                String orderId = await model.finishOrder();
+                if (orderId != null) {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => OrderScreen(orderId)));
+                }
+              }),
+            ]);
           }
         },
       ),
